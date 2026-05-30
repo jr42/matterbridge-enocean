@@ -27,6 +27,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # matterbridge is intentionally NOT a (dev)dependency of the plugin (a Matterbridge
+      # plugin must not bundle or depend on the host). It is provided at runtime by the
+      # Matterbridge installation; for type-checking/build/test we install it globally and
+      # link it, mirroring the local `npm run dev:link` workflow.
+      - name: Install and link matterbridge
+        run: |
+          npm install -g matterbridge
+          npm link matterbridge
+
       - name: Format check
         run: npm run format:check
 
