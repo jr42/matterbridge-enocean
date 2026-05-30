@@ -39,11 +39,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # See ci.yml — matterbridge is provided at runtime, not depended on; link it for the build.
-      - name: Install and link matterbridge
-        run: |
-          npm install -g matterbridge
-          npm link matterbridge
+      # See ci.yml — matterbridge is provided at runtime, not depended on; drop it into
+      # node_modules with --no-save so tsc can resolve its types for the build.
+      - name: Provide matterbridge for type-checking
+        run: npm install --no-save matterbridge
 
       - name: Verify package version matches tag
         run: |

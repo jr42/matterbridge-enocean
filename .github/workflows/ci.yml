@@ -29,12 +29,10 @@ jobs:
 
       # matterbridge is intentionally NOT a (dev)dependency of the plugin (a Matterbridge
       # plugin must not bundle or depend on the host). It is provided at runtime by the
-      # Matterbridge installation; for type-checking/build/test we install it globally and
-      # link it, mirroring the local `npm run dev:link` workflow.
-      - name: Install and link matterbridge
-        run: |
-          npm install -g matterbridge
-          npm link matterbridge
+      # Matterbridge installation; for type-checking/build/test we drop it into node_modules
+      # with --no-save so tsc can resolve its types without adding it to package.json.
+      - name: Provide matterbridge for type-checking
+        run: npm install --no-save matterbridge
 
       - name: Format check
         run: npm run format:check
