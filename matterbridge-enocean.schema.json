@@ -1,0 +1,98 @@
+{
+  "title": "Matterbridge EnOcean plugin",
+  "description": "matterbridge-enocean v. 0.0.1 by https://github.com/jr42",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Plugin Name",
+      "description": "Plugin name",
+      "type": "string",
+      "readOnly": true,
+      "ui:widget": "hidden"
+    },
+    "type": {
+      "title": "Plugin Type",
+      "description": "Plugin type",
+      "type": "string",
+      "readOnly": true,
+      "ui:widget": "hidden"
+    },
+    "device": {
+      "title": "EnOcean gateway",
+      "description": "Serial device path (e.g. /dev/serial/by-id/usb-EnOcean_GmbH_USB_300_...) or a TCP socket URL (e.g. tcp://enocean-host:3334, such as a ser2net raw accepter).",
+      "type": "string"
+    },
+    "baud": {
+      "title": "Serial baud rate",
+      "description": "Serial baud rate (EnOcean USB300 uses 57600). Ignored for tcp:// gateways.",
+      "type": "number",
+      "default": 57600
+    },
+    "teachIn": {
+      "title": "Teach-in logging",
+      "description": "Log unknown EnOcean sender ids and their raw telegrams to help discover device ids. Enable temporarily while adding devices.",
+      "type": "boolean",
+      "default": false
+    },
+    "devices": {
+      "title": "Devices",
+      "description": "The EnOcean devices to expose as Matter bridged devices.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "EnOcean id",
+            "description": "The device's EnOcean id, e.g. 01:23:45:67.",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "description": "Friendly name shown in Matter controllers.",
+            "type": "string"
+          },
+          "eep": {
+            "title": "EEP",
+            "description": "EnOcean Equipment Profile, e.g. F6-02-01 (rocker) or F6-10-00 (window handle). Used to infer the profile. For rockers, F6-02-01 (Style 1, EU) and F6-02-02 (Style 2, US) are the same switch mounted the other way up: choosing the EEP flips the top/bottom button names and tags.",
+            "type": "string"
+          },
+          "profile": {
+            "title": "Profile (optional)",
+            "description": "Explicit profile name overriding the one inferred from the EEP.",
+            "type": "string",
+            "oneOf": [
+              { "const": "rocker", "title": "Rocker switch (N momentary generic switches)" },
+              { "const": "window-handle", "title": "Window handle (closed + tilted contact sensors)" }
+            ]
+          },
+          "buttons": {
+            "title": "Buttons (rocker only)",
+            "description": "Number of momentary buttons to expose for a rocker (default 4).",
+            "type": "number",
+            "default": 4
+          },
+          "buttonNames": {
+            "title": "Button names (rocker only)",
+            "description": "Optional friendly names per button, in index order, overriding the EEP-derived defaults (Rocker A Bottom, Rocker A Top, Rocker B Bottom, Rocker B Top). Leave empty to use the standard names. The semantic position tags are always applied.",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["id", "name"]
+      }
+    },
+    "unregisterOnShutdown": {
+      "title": "Unregister On Shutdown",
+      "description": "Unregister all devices on shutdown. Only for debugging purposes, not recommended for production use.",
+      "type": "boolean",
+      "default": false
+    },
+    "debug": {
+      "title": "Enable Debug",
+      "description": "Enable debug mode for the plugin.",
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": ["device", "devices"]
+}
