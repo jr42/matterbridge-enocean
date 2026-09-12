@@ -1,0 +1,21 @@
+package-lock.json
+  s_1fbabbae64d25f::t_5a39c125b69b2e 3,9
+package.json
+  s_1fbabbae64d25f::t_c0056b9bc3e7eb 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "f83e33efb440a1403cf8d28907cd84ab34d6eadc",
+  "prompts": {},
+  "sessions": {
+    "s_1fbabbae64d25f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b439c043-baeb-4209-a38d-a102a492f795",
+        "model": "unknown"
+      },
+      "human_author": "Jeremias Reith <jr42@users.noreply.github.com>"
+    }
+  }
+}
