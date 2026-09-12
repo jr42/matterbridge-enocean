@@ -1,0 +1,21 @@
+src/profiles/rocker.ts
+  s_1fbabbae64d25f::t_5fce5678032454 12-13,21,30,37-47,88-89,105,107
+test/rocker.test.ts
+  s_1fbabbae64d25f::t_0e099866a133d9 2,40-44,48-50,53-56,59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "f9ae62eb34c590176b53f0d722c6373cffafd69e",
+  "prompts": {},
+  "sessions": {
+    "s_1fbabbae64d25f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b439c043-baeb-4209-a38d-a102a492f795",
+        "model": "unknown"
+      },
+      "human_author": "Jeremias Reith <jr42@users.noreply.github.com>"
+    }
+  }
+}
