@@ -9,8 +9,8 @@
  *   - F6-02-01 ("Style 1", 0-state up, common in the EU):  I = bottom, O = top
  *   - F6-02-02 ("Style 2", I-state up, common in the US):  I = top,    O = bottom
  * The two styles are otherwise byte-identical; choosing the EEP is the single "rotation"
- * setting. Each child Generic Switch also carries semantic tags (a NumberTag for "which
- * button" and PositionTag left/right + top/bottom) that stricter Matter hubs such as the
+ * setting. Each child Generic Switch also carries semantic tags (a CommonNumberTag for "which
+ * button" and CommonPositionTag left/right + top/bottom) that stricter Matter hubs such as the
  * Aqara M200 use to enumerate and label the buttons. The optional `buttonNames` config
  * overrides the derived names (e.g. "Kitchen Light").
  *
@@ -18,7 +18,7 @@
  */
 
 import { bridgedNode, genericSwitch, MatterbridgeEndpoint } from 'matterbridge';
-import { NumberTag, PositionTag } from 'matterbridge/matter';
+import { CommonNumberTag, CommonPositionTag } from 'matterbridge/matter';
 
 import type { EnoceanDeviceConfig } from '../config.js';
 import { normalizeId } from '../config.js';
@@ -27,15 +27,24 @@ import { decodeRocker } from './decode.js';
 import type { DeviceHandler, ProfileDeps } from './types.js';
 
 /** A Matter semantic tag, derived from the tag values rather than the matter package's globals. */
-type Semtag = typeof NumberTag.One;
+type Semtag = typeof CommonNumberTag.One;
 
 /** Default number of buttons for a 2-rocker EnOcean switch. */
 const DEFAULT_BUTTONS = 4;
 /** Maximum number of buttons we will expose. */
 const MAX_BUTTONS = 8;
 
-/** NumberTag entries indexed 0..7, used to identify "which button". */
-const NUMBER_TAGS = [NumberTag.One, NumberTag.Two, NumberTag.Three, NumberTag.Four, NumberTag.Five, NumberTag.Six, NumberTag.Seven, NumberTag.Eight];
+/** CommonNumberTag entries indexed 0..7, used to identify "which button". */
+const NUMBER_TAGS = [
+  CommonNumberTag.One,
+  CommonNumberTag.Two,
+  CommonNumberTag.Three,
+  CommonNumberTag.Four,
+  CommonNumberTag.Five,
+  CommonNumberTag.Six,
+  CommonNumberTag.Seven,
+  CommonNumberTag.Eight,
+];
 
 /**
  * The EnOcean F6-02 rocker actions, in telegram order (AI, AO, BI, BO). `rocker` is the
@@ -76,8 +85,8 @@ export function defaultButtonName(index: number, style2: boolean): string | unde
 }
 
 /**
- * Build the semantic tag list for a button: a NumberTag ("which button") plus, for the
- * canonical 4-button rocker, the left/right + top/bottom PositionTags.
+ * Build the semantic tag list for a button: a CommonNumberTag ("which button") plus, for the
+ * canonical 4-button rocker, the left/right + top/bottom CommonPositionTags.
  *
  * @param {number} index - Zero-based button index.
  * @param {number} count - Total number of buttons on the device.
@@ -93,9 +102,9 @@ export function buttonTagList(index: number, count: number, style2 = false): Sem
   // Only apply the rocker position layout for the canonical 4-button device.
   const action = ROCKER_ACTIONS[index];
   if (count === DEFAULT_BUTTONS && action) {
-    tags.push(action.rocker === 'A' ? PositionTag.Left : PositionTag.Right);
+    tags.push(action.rocker === 'A' ? CommonPositionTag.Left : CommonPositionTag.Right);
     const top = style2 ? action.contact === 'I' : action.contact === 'O';
-    tags.push(top ? PositionTag.Top : PositionTag.Bottom);
+    tags.push(top ? CommonPositionTag.Top : CommonPositionTag.Bottom);
   }
   return tags;
 }
