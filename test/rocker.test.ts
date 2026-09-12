@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { NumberTag, PositionTag } from 'matterbridge/matter';
+import { CommonNumberTag, CommonPositionTag } from 'matterbridge/matter';
 
 import { buttonTagList, defaultButtonName, isStyle2 } from '../src/profiles/rocker.js';
 
@@ -37,26 +37,26 @@ describe('defaultButtonName (EEP-derived names)', () => {
 });
 
 describe('buttonTagList (F6-02 rocker semantic tags)', () => {
-  it('maps the 4-button rocker layout to NumberTag + PositionTag (style 1)', () => {
-    expect(buttonTagList(0, 4)).toEqual([NumberTag.One, PositionTag.Left, PositionTag.Bottom]);
-    expect(buttonTagList(1, 4)).toEqual([NumberTag.Two, PositionTag.Left, PositionTag.Top]);
-    expect(buttonTagList(2, 4)).toEqual([NumberTag.Three, PositionTag.Right, PositionTag.Bottom]);
-    expect(buttonTagList(3, 4)).toEqual([NumberTag.Four, PositionTag.Right, PositionTag.Top]);
+  it('maps the 4-button rocker layout to CommonNumberTag + CommonPositionTag (style 1)', () => {
+    expect(buttonTagList(0, 4)).toEqual([CommonNumberTag.One, CommonPositionTag.Left, CommonPositionTag.Bottom]);
+    expect(buttonTagList(1, 4)).toEqual([CommonNumberTag.Two, CommonPositionTag.Left, CommonPositionTag.Top]);
+    expect(buttonTagList(2, 4)).toEqual([CommonNumberTag.Three, CommonPositionTag.Right, CommonPositionTag.Bottom]);
+    expect(buttonTagList(3, 4)).toEqual([CommonNumberTag.Four, CommonPositionTag.Right, CommonPositionTag.Top]);
   });
 
   it('flips top/bottom position tags for style 2', () => {
-    expect(buttonTagList(0, 4, true)).toEqual([NumberTag.One, PositionTag.Left, PositionTag.Top]);
-    expect(buttonTagList(1, 4, true)).toEqual([NumberTag.Two, PositionTag.Left, PositionTag.Bottom]);
-    expect(buttonTagList(3, 4, true)).toEqual([NumberTag.Four, PositionTag.Right, PositionTag.Bottom]);
+    expect(buttonTagList(0, 4, true)).toEqual([CommonNumberTag.One, CommonPositionTag.Left, CommonPositionTag.Top]);
+    expect(buttonTagList(1, 4, true)).toEqual([CommonNumberTag.Two, CommonPositionTag.Left, CommonPositionTag.Bottom]);
+    expect(buttonTagList(3, 4, true)).toEqual([CommonNumberTag.Four, CommonPositionTag.Right, CommonPositionTag.Bottom]);
   });
 
-  it('applies only the NumberTag when the button count is not the canonical 4', () => {
-    expect(buttonTagList(0, 2)).toEqual([NumberTag.One]);
-    expect(buttonTagList(1, 2)).toEqual([NumberTag.Two]);
-    expect(buttonTagList(5, 6)).toEqual([NumberTag.Six]);
+  it('applies only the CommonNumberTag when the button count is not the canonical 4', () => {
+    expect(buttonTagList(0, 2)).toEqual([CommonNumberTag.One]);
+    expect(buttonTagList(1, 2)).toEqual([CommonNumberTag.Two]);
+    expect(buttonTagList(5, 6)).toEqual([CommonNumberTag.Six]);
   });
 
-  it('returns an empty tag list for indexes beyond the NumberTag table', () => {
+  it('returns an empty tag list for indexes beyond the CommonNumberTag table', () => {
     expect(buttonTagList(8, 9)).toEqual([]);
   });
 });

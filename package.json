@@ -1,6 +1,6 @@
 {
   "name": "matterbridge-enocean",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Matterbridge plugin that exposes EnOcean devices (battery-free switches and sensors) as Matter bridged devices. Config-file driven, supports a local serial dongle or a ser2net TCP socket.",
   "author": "jr42",
   "license": "Apache-2.0",
